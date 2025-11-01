@@ -50,7 +50,7 @@ LOG_LEVEL: int = config("LOG_LEVEL", default=logging.WARNING)
 ENV: str = config("ENV", default="local")
 
 # FastAPI settings
-PROJECT_NAME = config("PROJECT_NAME", default="ResumeX")
+PROJECT_NAME = config("PROJECT_NAME", default="LevelUP")
 API_V1_STR = config("API_V1_STR", default="/api/v1")
 
 # CORS settings

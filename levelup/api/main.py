@@ -1,4 +1,4 @@
-"""API router for ResumeX application."""
+"""API router for LevelUP application."""
 
 from fastapi import APIRouter
 
