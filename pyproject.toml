@@ -1,3 +1,13 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["levelup"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.ini", "*.yaml"]
+
 [project]
 name = "LevelUP"
 version = "0.1.0"
