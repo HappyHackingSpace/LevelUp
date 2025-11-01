@@ -1,10 +1,10 @@
 site_name: LevelUP
 site_description: AI-powered CV analysis and career evaluation platform
 site_author: Happy Hacking Space
-site_url: https://happyhackingspace.github.io/levelup
+site_url: https://happyhackingspace.github.io/LevelUp
 
-repo_name: HappyHackingSpace/levelup
-repo_url: https://github.com/HappyHackingSpace/levelup
+repo_name: HappyHackingSpace/LevelUp
+repo_url: https://github.com/HappyHackingSpace/LevelUp
 edit_uri: edit/main/docs/
 
 theme:
@@ -70,7 +70,7 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/HappyHackingSpace/levelup
+      link: https://github.com/HappyHackingSpace/LevelUp
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/levelup/
     - icon: fontawesome/brands/discord
