@@ -1,10 +1,10 @@
-# ResumeX Documentation
+# LevelUP Documentation
 
-Welcome to ResumeX - an advanced AI-powered CV analysis application.
+Welcome to LevelUP - an advanced AI-powered CV analysis application.
 
 ## Overview
 
-ResumeX is a comprehensive career evaluation platform that uses Google's Gemini AI to analyze CVs and resumes.
+LevelUP is a comprehensive career evaluation platform that uses Google's Gemini AI to analyze CVs and resumes.
 The application provides detailed insights into career domain matching,
 competency evaluation, and personalized development recommendations.
 
@@ -36,8 +36,8 @@ competency evaluation, and personalized development recommendations.
 
 ```bash
 # Clone the repository
-git clone https://github.com/HappyHackingSpace/resumex
-cd resumex
+git clone https://github.com/HappyHackingSpace/levelup
+cd levelup
 
 # Install dependencies
 uv sync
@@ -55,15 +55,15 @@ GEMINI_API_KEY=your_api_key_here
 
 ```bash
 # Streamlit UI
-streamlit run resumex/app.py
+streamlit run levelup/app.py
 
 # FastAPI Backend
-uvicorn resumex.main:app --reload
+uvicorn levelup.main:app --reload
 ```
 
 ## Architecture
 
-ResumeX is built with:
+LevelUP is built with:
 
 - **Backend**: FastAPI + SQLAlchemy + PostgreSQL
 - **AI**: Google Gemini API
@@ -72,11 +72,11 @@ ResumeX is built with:
 
 ## Next Steps
 
-- [User Guide](user-guide.md) - Learn how to use ResumeX effectively
+- [User Guide](user-guide.md) - Learn how to use LevelUP effectively
 - [API Reference](api.md) - Explore the REST API
-- [Contributing](contributing.md) - Help improve ResumeX
+- [Contributing](contributing.md) - Help improve LevelUP
 
 ## Support
 
-- GitHub: [HappyHackingSpace/resumex](https://github.com/HappyHackingSpace/resumex)
+- GitHub: [HappyHackingSpace/levelup](https://github.com/HappyHackingSpace/levelup)
 - Discord: [Happy Hacking Space](https://discord.gg/happyhackingspace)

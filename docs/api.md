@@ -1,6 +1,6 @@
 # API Reference
 
-Complete reference for the ResumeX REST API.
+Complete reference for the LevelUP REST API.
 
 ## Base URL
 
@@ -24,7 +24,7 @@ Get API information.
 
 ```json
 {
-  "message": "Welcome to ResumeX API",
+  "message": "Welcome to LevelUP API",
   "version": "0.1.0"
 }
 ```
@@ -326,5 +326,5 @@ The API uses semantic versioning. Current version: **v0.1.0**
 
 For API issues or questions:
 
-- GitHub Issues: [HappyHackingSpace/resumex/issues](https://github.com/HappyHackingSpace/resumex/issues)
+- GitHub Issues: [HappyHackingSpace/levelup/issues](https://github.com/HappyHackingSpace/levelup/issues)
 - Discord: [Happy Hacking Space](https://discord.gg/happyhackingspace)

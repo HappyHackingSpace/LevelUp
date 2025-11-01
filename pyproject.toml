@@ -1,7 +1,7 @@
 [project]
-name = "ResumeX"
+name = "LevelUP"
 version = "0.1.0"
-description = "ResumeX is an advanced AI-powered CV analysis application"
+description = "LevelUP is an advanced AI-powered CV analysis application"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -120,7 +120,7 @@ docstring-code-format = false
 docstring-code-line-length = "dynamic"
 
 [tool.ruff.lint.isort]
-known-first-party = ["resumex"]
+known-first-party = ["levelup"]
 known-third-party = ["wandb"]
 
 [tool.mypy]
@@ -141,7 +141,7 @@ strict_equality = true
 
 # Exclude alembic and migrations
 exclude = [
-    "resumex/database/alembic/",
+    "levelup/database/alembic/",
     "build/",
     "dist/",
     ".venv/",

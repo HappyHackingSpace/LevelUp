@@ -2,7 +2,7 @@ from typing import Generator
 
 from sqlalchemy.orm import Session
 
-from resumex.database.core import SessionLocal
+from levelup.database.core import SessionLocal
 
 
 def get_db() -> Generator[Session, None, None]:

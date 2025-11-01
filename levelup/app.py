@@ -7,8 +7,8 @@ import google.generativeai as genai
 import pypdf
 import streamlit as st
 
-from resumex import config
-from resumex.prompts import get_resume_analysis_prompt
+from levelup import config
+from levelup.prompts import get_resume_analysis_prompt
 
 GEMINI_API_KEY = config.GEMINI_API_KEY
 if not GEMINI_API_KEY:

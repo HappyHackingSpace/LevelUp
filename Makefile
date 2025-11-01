@@ -5,12 +5,12 @@ install:
 	pre-commit install
 
 lint:
-	uv run ruff check --fix ./resumex/
-	uv run ruff format ./resumex/
-	uv run mypy ./resumex/
+	uv run ruff check --fix ./levelup/
+	uv run ruff format ./levelup/
+	uv run mypy ./levelup/
 
 mypy:
-	uv run mypy ./resumex/
+	uv run mypy ./levelup/
 
 clean:
 	rm -rf build/

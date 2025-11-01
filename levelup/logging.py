@@ -1,7 +1,7 @@
 import logging
 from enum import Enum
 
-from resumex.config import LOG_LEVEL
+from levelup.config import LOG_LEVEL
 
 LOG_FORMAT_DEBUG = "%(levelname)s:%(message)s:%(pathname)s:%(funcName)s:%(lineno)d"
 

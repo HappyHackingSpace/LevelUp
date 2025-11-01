@@ -6,7 +6,7 @@ from sqlalchemy import Engine
 from sqlalchemy.schema import CreateSchema, Table
 from sqlalchemy_utils import create_database, database_exists
 
-import resumex.config as config
+import levelup.config as config
 
 from .core import Base
 

@@ -30,12 +30,12 @@ jobs:
 
     - name: Run linting
       run: |
-        uv run ruff check ./resumex/
-        uv run ruff format --check ./resumex/
+        uv run ruff check ./levelup/
+        uv run ruff format --check ./levelup/
 
     - name: Run type checking
       run: |
-        uv run mypy ./resumex/
+        uv run mypy ./levelup/
 
     - name: Run tests
       run: |

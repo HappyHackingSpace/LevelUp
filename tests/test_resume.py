@@ -7,7 +7,7 @@ from pytest_mock import MockerFixture
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
-from resumex.app import (
+from levelup.app import (
     analyzecv_pdf_withllm,
     display_analysis_results,
     display_comparative_benchmarking,
@@ -28,7 +28,7 @@ def test_extract_text_from_pdf(mocker: MockerFixture) -> None:
     mock_page.extract_text.return_value = "test"
     mock_reader.pages = [mock_page]
 
-    mocker.patch("resumex.app.pypdf.PdfReader", return_value=mock_reader)
+    mocker.patch("levelup.app.pypdf.PdfReader", return_value=mock_reader)
 
     assert extract_text_from_pdf(io.BytesIO(b"test")) == "test"
 
@@ -38,8 +38,8 @@ def test_analyzecv_pdf_withllm_success(mocker: MockerFixture) -> None:
     mock_response = MagicMock()
     mock_response.text = '{"language":"English","domain_scores":[{"domain":"IT","score":90,"justification":"Strong technical background"}]}'
 
-    mocker.patch("resumex.app.get_resume_analysis_prompt", return_value="mocked prompt")
-    mocker.patch("resumex.app.Model.generate_content", return_value=mock_response)
+    mocker.patch("levelup.app.get_resume_analysis_prompt", return_value="mocked prompt")
+    mocker.patch("levelup.app.Model.generate_content", return_value=mock_response)
 
     result = analyzecv_pdf_withllm("Sample resume text", "English")
 
@@ -54,17 +54,17 @@ def test_analyzecv_pdf_withllm_failure(mocker: MockerFixture) -> None:
     mock_response_no_json = MagicMock()
     mock_response_no_json.text = "No JSON here"
 
-    mocker.patch("resumex.app.get_resume_analysis_prompt", return_value="mocked prompt")
+    mocker.patch("levelup.app.get_resume_analysis_prompt", return_value="mocked prompt")
     mocker.patch(
-        "resumex.app.Model.generate_content", return_value=mock_response_no_json
+        "levelup.app.Model.generate_content", return_value=mock_response_no_json
     )
-    mocker.patch("resumex.app.st.error")
+    mocker.patch("levelup.app.st.error")
 
     result = analyzecv_pdf_withllm("Sample resume text", "English")
     assert result is None
 
     mocker.patch(
-        "resumex.app.Model.generate_content", side_effect=Exception("API Error")
+        "levelup.app.Model.generate_content", side_effect=Exception("API Error")
     )
     result = analyzecv_pdf_withllm("Sample resume text", "English")
     assert result is None
@@ -72,7 +72,7 @@ def test_analyzecv_pdf_withllm_failure(mocker: MockerFixture) -> None:
 
 def test_display_language_info(mocker: MockerFixture) -> None:
     """Test display of language information."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {"language": "Spanish"}
     display_language_info(test_result)
@@ -87,7 +87,7 @@ def test_display_language_info(mocker: MockerFixture) -> None:
 
 def test_display_domain_scores(mocker: MockerFixture) -> None:
     """Test display of domain scores."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {
         "domain_scores": [
@@ -109,7 +109,7 @@ def test_display_domain_scores(mocker: MockerFixture) -> None:
 
 def test_display_competency_scores(mocker: MockerFixture) -> None:
     """Test display of competency scores."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {
         "competency_scores": [
@@ -140,7 +140,7 @@ def test_display_competency_scores(mocker: MockerFixture) -> None:
 
 def test_display_strategic_insights(mocker: MockerFixture) -> None:
     """Test display of strategic insights."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {"strategic_insights": "This candidate has potential"}
     display_strategic_insights(test_result)
@@ -155,7 +155,7 @@ def test_display_strategic_insights(mocker: MockerFixture) -> None:
 
 def test_display_development_recommendations(mocker: MockerFixture) -> None:
     """Test display of development recommendations."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {
         "development_recommendations": [
@@ -178,7 +178,7 @@ def test_display_development_recommendations(mocker: MockerFixture) -> None:
 
 def test_display_comparative_benchmarking(mocker: MockerFixture) -> None:
     """Test display of comparative benchmarking."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {"comparative_benchmarking": "Above average in the field"}
     display_comparative_benchmarking(test_result)
@@ -193,7 +193,7 @@ def test_display_comparative_benchmarking(mocker: MockerFixture) -> None:
 
 def test_display_overall_summary(mocker: MockerFixture) -> None:
     """Test display of overall summary."""
-    mock_st = mocker.patch("resumex.app.st")
+    mock_st = mocker.patch("levelup.app.st")
 
     test_result = {
         "overall_summary": {
@@ -222,15 +222,15 @@ def test_display_overall_summary(mocker: MockerFixture) -> None:
 
 def test_display_analysis_results(mocker: MockerFixture) -> None:
     """Test the orchestrator function that displays all results."""
-    mock_language = mocker.patch("resumex.app.display_language_info")
-    mock_domain = mocker.patch("resumex.app.display_domain_scores")
-    mock_competency = mocker.patch("resumex.app.display_competency_scores")
-    mock_insights = mocker.patch("resumex.app.display_strategic_insights")
+    mock_language = mocker.patch("levelup.app.display_language_info")
+    mock_domain = mocker.patch("levelup.app.display_domain_scores")
+    mock_competency = mocker.patch("levelup.app.display_competency_scores")
+    mock_insights = mocker.patch("levelup.app.display_strategic_insights")
     mock_recommendations = mocker.patch(
-        "resumex.app.display_development_recommendations"
+        "levelup.app.display_development_recommendations"
     )
-    mock_benchmarking = mocker.patch("resumex.app.display_comparative_benchmarking")
-    mock_summary = mocker.patch("resumex.app.display_overall_summary")
+    mock_benchmarking = mocker.patch("levelup.app.display_comparative_benchmarking")
+    mock_summary = mocker.patch("levelup.app.display_overall_summary")
 
     test_result = {"dummy": "data"}
     display_analysis_results(test_result)

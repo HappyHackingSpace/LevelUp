@@ -1,10 +1,10 @@
-site_name: ResumeX
+site_name: LevelUP
 site_description: AI-powered CV analysis and career evaluation platform
 site_author: Happy Hacking Space
-site_url: https://happyhackingspace.github.io/resumex
+site_url: https://happyhackingspace.github.io/levelup
 
-repo_name: HappyHackingSpace/resumex
-repo_url: https://github.com/HappyHackingSpace/resumex
+repo_name: HappyHackingSpace/levelup
+repo_url: https://github.com/HappyHackingSpace/levelup
 edit_uri: edit/main/docs/
 
 theme:
@@ -70,9 +70,9 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/HappyHackingSpace/resumex
+      link: https://github.com/HappyHackingSpace/levelup
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/resumex/
+      link: https://pypi.org/project/levelup/
     - icon: fontawesome/brands/discord
       link: https://discord.gg/happyhackingspace
 

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from starlette.middleware.cors import CORSMiddleware
 
-import resumex.config as settings
+import levelup.config as settings
 
 try:
     import sentry_sdk
@@ -12,7 +12,7 @@ except ImportError:
     SENTRY_AVAILABLE = False
     sentry_sdk = None  # type: ignore
 
-from resumex.api.main import api_router
+from levelup.api.main import api_router
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
@@ -47,7 +47,7 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 @app.get("/")
 def root() -> dict[str, str]:
     """Root endpoint."""
-    return {"message": "Welcome to ResumeX API", "version": "0.1.0"}
+    return {"message": "Welcome to LevelUP API", "version": "0.1.0"}
 
 
 @app.get("/health")

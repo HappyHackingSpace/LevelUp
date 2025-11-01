@@ -1,6 +1,6 @@
-# Contributing to ResumeX
+# Contributing to LevelUP
 
-Thank you for your interest in contributing to ResumeX! We welcome contributions of all kinds.
+Thank you for your interest in contributing to LevelUP! We welcome contributions of all kinds.
 
 ## Ways to Contribute
 
@@ -24,8 +24,8 @@ Thank you for your interest in contributing to ResumeX! We welcome contributions
 1. **Fork the Repository**
 
    ```bash
-   git clone https://github.com/your-username/resumex.git
-   cd resumex
+   git clone https://github.com/HappyHackingSpace/LevelUp.git
+   cd levelup
    ```
 
 2. **Install Dependencies**
@@ -66,7 +66,7 @@ uv run ruff format .
 uv run ruff check .
 
 # Type checking
-uv run mypy resumex
+uv run mypy levelup
 ```
 
 ## Pull Request Process
@@ -176,8 +176,8 @@ When adding features:
 ## Project Structure
 
 ```
-resumex/
-├── resumex/
+levelup/
+├── levelup/
 │   ├── api/          # API routes
 │   ├── crud/         # Database operations
 │   ├── database/     # DB configuration
@@ -220,6 +220,6 @@ By contributing, you agree that your contributions will be licensed under the sa
 ## Questions?
 
 - Discord: [Happy Hacking Space](https://discord.gg/happyhackingspace)
-- GitHub Discussions: [HappyHackingSpace/resumex](https://github.com/HappyHackingSpace/resumex/discussions)
+- GitHub Discussions: [HappyHackingSpace/levelup](https://github.com/HappyHackingSpace/LevelUp/discussions)
 
 Thank you for contributing! 🎉

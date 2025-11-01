@@ -12,7 +12,7 @@ from sqlalchemy.engine.url import make_url
 from sqlalchemy.orm import DeclarativeBase, Session, declared_attr, sessionmaker
 from starlette.requests import Request
 
-import resumex.config as cfg
+import levelup.config as cfg
 
 logger = logging.getLogger(__name__)
 

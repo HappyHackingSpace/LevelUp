@@ -1,6 +1,6 @@
 # User Guide
 
-This guide will help you get started with ResumeX and make the most of its features.
+This guide will help you get started with LevelUP and make the most of its features.
 
 ## Getting Started
 
@@ -16,14 +16,14 @@ uv sync
 echo "GEMINI_API_KEY=your_key_here" > .env
 ```
 
-### 2. Running ResumeX
+### 2. Running LevelUP
 
-You can use ResumeX in two ways:
+You can use LevelUP in two ways:
 
 #### Option A: Web Interface (Streamlit)
 
 ```bash
-streamlit run resumex/app.py
+streamlit run levelup/app.py
 ```
 
 This starts a web interface at `http://localhost:8501` where you can:
@@ -35,7 +35,7 @@ This starts a web interface at `http://localhost:8501` where you can:
 #### Option B: REST API
 
 ```bash
-uvicorn resumex.main:app --reload
+uvicorn levelup.main:app --reload
 ```
 
 This starts the API server at `http://localhost:8000` where you can:
@@ -199,7 +199,7 @@ for cv_file in cv_directory.glob("*.pdf"):
 Extend the base prompts to include additional analysis dimensions:
 
 ```python
-from resumex.prompts import get_resume_analysis_prompt
+from levelup.prompts import get_resume_analysis_prompt
 
 custom_prompt = get_resume_analysis_prompt(
     text=cv_text,
@@ -211,5 +211,5 @@ custom_prompt = get_resume_analysis_prompt(
 ## Next Steps
 
 - [API Reference](api.md) - Detailed API documentation
-- [Contributing](contributing.md) - Help improve ResumeX
+- [Contributing](contributing.md) - Help improve LevelUP
 - [Changelog](changelog.md) - See what's new

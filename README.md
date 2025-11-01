@@ -1,8 +1,8 @@
-# ResumeX
+# Level UP
 
 ## Description
 
-ResumeX is an advanced AI-powered CV analysis application that provides comprehensive career evaluation and insights.
+LevelUP is an advanced AI-powered CV analysis application that provides comprehensive career evaluation and insights.
 Users can upload their CVs in PDF format and receive detailed analysis through the Gemini API.
 The application offers multi-language support and provides structured analysis covering career domain matching,
 competency evaluation, strategic insights, and personalized development recommendations.
@@ -28,7 +28,7 @@ competency evaluation, strategic insights, and personalized development recommen
 
    ```bash
    git clone <repository-url>
-   cd resumeX
+   cd levelup
    ```
 
 2. Install dependencies (using `pyproject.toml`):
@@ -55,7 +55,7 @@ competency evaluation, strategic insights, and personalized development recommen
 1. Run the application:
 
    ```bash
-   streamlit run src/resumex/app.py
+   streamlit run src/levelup/app.py
    ```
 
 2. Upload your CV in PDF format.
