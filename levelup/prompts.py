@@ -1,19 +1,19 @@
 def get_resume_analysis_prompt(text: str, report_language: str) -> str:
     """Generate a complete prompt for resume analysis with the LLM.
-    
+
     Constructs a detailed prompt that guides the LLM to perform a comprehensive
     analysis of a resume/CV. The prompt includes instructions for language detection,
     domain matching, competency evaluation, strategic insights, development recommendations,
     comparative benchmarking, and an overall summary.
-    
+
     The prompt specifies that the output should be formatted as a JSON structure
     for easy parsing by the application.
-    
+
     Args:
         text: The text content of the resume/CV to be analyzed.
         report_language: The language in which the analysis report should be generated.
             This is independent of the language the resume is written in.
-            
+
     Returns:
         str: A formatted prompt string ready to be sent to the LLM.
     """

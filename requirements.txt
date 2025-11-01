@@ -1,5 +1,0 @@
-streamlit
-google-generativeai
-pypdf
-python-dotenv 
-pytest
