@@ -37,7 +37,7 @@ Thank you for your interest in contributing to LevelUP! We welcome contributions
 3. **Create a Development Environment**
 
    ```bash
-   cp .env.example .env
+   cp .env.template .env
    # Edit .env with your API keys
    ```
 

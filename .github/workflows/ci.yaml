@@ -28,6 +28,10 @@ jobs:
       run: |
         uv sync
 
+    - name: Set up test environment
+      run: |
+        cp env.template .env
+
     - name: Run linting
       run: |
         uv run ruff check ./levelup/
