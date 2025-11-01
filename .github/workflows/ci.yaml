@@ -30,7 +30,7 @@ jobs:
 
     - name: Set up test environment
       run: |
-        cp env.template .env
+        cp .env.template .env
 
     - name: Run linting
       run: |
