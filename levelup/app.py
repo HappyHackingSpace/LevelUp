@@ -1,7 +1,7 @@
 import io
 import json
 import re
-from typing import Any, Dict, List, cast
+from typing import Any, cast
 
 import google.generativeai as genai
 import pandas as pd  # type: ignore[import-untyped]
@@ -24,7 +24,7 @@ Model = genai.GenerativeModel("gemini-2.0-flash-lite")
 def extract_text_from_pdf(uploaded_file: Any) -> str | None:
     try:
         pdf_reader = pypdf.PdfReader(io.BytesIO(uploaded_file.read()))
-        parts: List[str] = []
+        parts: list[str] = []
         for page in pdf_reader.pages:
             parts.append(page.extract_text() or "")
         return "\n".join(parts).strip()
@@ -43,24 +43,22 @@ def _extract_json_block(raw_text: str) -> str | None:
     return None
 
 
-def analyzecv_pdf_withllm(text: str, report_language: str) -> Dict[str, Any] | None:
+def analyzecv_pdf_withllm(text: str, report_language: str) -> dict[str, Any] | None:
     prompt = get_resume_analysis_prompt(text, report_language)
     try:
         response = Model.generate_content(prompt)
         raw_text = (response.text or "").strip()
-        json_str = _extract_json_block(raw_text)
-        if not json_str:
+        if not (json_str := _extract_json_block(raw_text)):
             st.error(
                 "Sorry, the analysis could not be completed. Please try again later or upload a different file."
             )
             return None
 
-        data: Any = json.loads(json_str)
-        if not isinstance(data, dict):
-            st.error("The analysis did not return a JSON object.")
-            return None
+        if not isinstance(data := json.loads(json_str), dict):
+            st.error("Invalid JSON object.")
+            return
 
-        return cast(Dict[str, Any], data)
+        return cast(dict[str, Any], data)
     except Exception as e:
         st.error(
             f"An error occurred while processing your resume. Please try again or upload a different file. Details: {e}"
@@ -68,19 +66,19 @@ def analyzecv_pdf_withllm(text: str, report_language: str) -> Dict[str, Any] | N
         return None
 
 
-def _safe_dict(obj: Dict[str, Any], key: str) -> Dict[str, Any]:
+def _safe_dict(obj: dict[str, Any], key: str) -> dict[str, Any]:
     val = obj.get(key, {})
     return val if isinstance(val, dict) else {}
 
 
-def display_language_info(result: Dict[str, Any]) -> None:
+def display_language_info(result: dict[str, Any]) -> None:
     st.subheader("Detected Language")
     st.write(result.get("language", "Not detected"))
 
 
-def display_domain_scores(result: Dict[str, Any]) -> None:
+def display_domain_scores(result: dict[str, Any]) -> None:
     st.subheader("Career Domain Fit Scores")
-    domains: List[Dict[str, Any]] = result.get("domain_scores", []) or []
+    domains: list[dict[str, Any]] = result.get("domain_scores", []) or []
     if domains:
         st.table(
             [
@@ -94,9 +92,9 @@ def display_domain_scores(result: Dict[str, Any]) -> None:
         )
 
 
-def display_competency_scores(result: Dict[str, Any]) -> None:
+def display_competency_scores(result: dict[str, Any]) -> None:
     st.subheader("Competency Evaluation")
-    comps: List[Dict[str, Any]] = result.get("competency_scores", []) or []
+    comps: list[dict[str, Any]] = result.get("competency_scores", []) or []
     if comps:
         st.table(
             [
@@ -111,26 +109,26 @@ def display_competency_scores(result: Dict[str, Any]) -> None:
         )
 
 
-def display_strategic_insights(result: Dict[str, Any]) -> None:
+def display_strategic_insights(result: dict[str, Any]) -> None:
     st.subheader("Strategic Insights")
     st.write(result.get("strategic_insights", "N/A"))
 
 
-def display_development_recommendations(result: Dict[str, Any]) -> None:
+def display_development_recommendations(result: dict[str, Any]) -> None:
     st.subheader("Development Recommendations")
     for rec in result.get("development_recommendations", []) or []:
         st.markdown(f"- {rec}")
 
 
-def display_comparative_benchmarking(result: Dict[str, Any]) -> None:
+def display_comparative_benchmarking(result: dict[str, Any]) -> None:
     st.subheader("Comparative Benchmarking")
     text = result.get("comparative_benchmarking", "N/A")
     st.write(text if isinstance(text, str) and text else "N/A")
 
 
-def display_overall_summary(result: Dict[str, Any]) -> None:
+def display_overall_summary(result: dict[str, Any]) -> None:
     st.subheader("Overall Summary")
-    summary: Dict[str, Any] = result.get("overall_summary", {}) or {}
+    summary: dict[str, Any] = result.get("overall_summary", {}) or {}
     st.markdown(f"**Overall Score:** {summary.get('overall_score', 'N/A')}/100")
     st.markdown("**Key Strengths:**")
     for s in summary.get("key_strengths", []) or []:
@@ -141,7 +139,7 @@ def display_overall_summary(result: Dict[str, Any]) -> None:
     st.markdown(f"**Talent Potential:** {summary.get('talent_potential', 'N/A')}")
 
 
-def display_analysis_results(result: Dict[str, Any]) -> None:
+def display_analysis_results(result: dict[str, Any]) -> None:
     display_language_info(result)
     display_domain_scores(result)
     display_competency_scores(result)
@@ -151,7 +149,7 @@ def display_analysis_results(result: Dict[str, Any]) -> None:
     display_overall_summary(result)
 
 
-def display_summary_block(result: Dict[str, Any]) -> None:
+def display_summary_block(result: dict[str, Any]) -> None:
     st.subheader("Overall Summary")
     summary = _safe_dict(result, "overall_summary")
     c1, c2, c3 = st.columns(3)
@@ -165,19 +163,11 @@ def display_summary_block(result: Dict[str, Any]) -> None:
     areas = summary.get("areas_to_improve", []) or []
     col_a, col_b = st.columns(2)
     with col_a:
-        st.markdown("**Key Strengths**")
-        if strengths:
-            for s in strengths:
-                st.markdown(f"- {s}")
-        else:
-            st.write("—")
+        st.subheader("Key Strengths")
+        st.markdown("\n".join(f"- {s}" for s in strengths) if strengths else "—")
     with col_b:
-        st.markdown("**Areas to Improve**")
-        if areas:
-            for a in areas:
-                st.markdown(f"- {a}")
-        else:
-            st.write("—")
+        st.subheader("Areas to Improve")
+        st.markdown("\n".join(f"- {a}" for a in areas) if areas else "—")
 
     role_suit = summary.get("role_suitability", []) or []
     if role_suit:
@@ -191,11 +181,11 @@ def display_summary_block(result: Dict[str, Any]) -> None:
         st.dataframe(df, width="stretch")
 
 
-def display_fit_and_gaps_tab(result: Dict[str, Any]) -> None:
+def display_fit_and_gaps_tab(result: dict[str, Any]) -> None:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("### Missing Skills")
-        ms: List[Dict[str, Any]] = result.get("missing_skills", []) or []
+        ms: list[dict[str, Any]] = result.get("missing_skills", []) or []
         if ms:
             rows = [
                 {
@@ -217,12 +207,12 @@ def display_fit_and_gaps_tab(result: Dict[str, Any]) -> None:
             st.write("No mismatches detected.")
 
 
-def display_competencies_tab(result: Dict[str, Any]) -> None:
+def display_competencies_tab(result: dict[str, Any]) -> None:
     st.markdown("### Competency Evaluation")
     comps = result.get("competency_scores", []) or []
     if comps:
 
-        def _score(x: Dict[str, Any]) -> float:
+        def _score(x: dict[str, Any]) -> float:
             try:
                 return float(x.get("score", 0))
             except Exception:
@@ -245,7 +235,7 @@ def display_competencies_tab(result: Dict[str, Any]) -> None:
         st.info("No competency scores returned.")
 
 
-def display_domains_tab(result: Dict[str, Any]) -> None:
+def display_domains_tab(result: dict[str, Any]) -> None:
     st.markdown("### Career Domain Fit Scores")
     domains = result.get("domain_scores", []) or []
     if domains:
@@ -270,7 +260,7 @@ def display_domains_tab(result: Dict[str, Any]) -> None:
         st.info("No domain scores returned.")
 
 
-def display_insights_tab(result: Dict[str, Any]) -> None:
+def display_insights_tab(result: dict[str, Any]) -> None:
     left, right = st.columns([3, 2])
     with left:
         st.markdown("### Strategic Insights")
@@ -281,7 +271,7 @@ def display_insights_tab(result: Dict[str, Any]) -> None:
         st.write(cb if isinstance(cb, str) and cb.strip() else "Not provided.")
 
 
-def display_recommendations_tab(result: Dict[str, Any]) -> None:
+def display_recommendations_tab(result: dict[str, Any]) -> None:
     st.markdown("### Development Recommendations")
     recs = result.get("development_recommendations", []) or []
     if recs:
@@ -291,7 +281,7 @@ def display_recommendations_tab(result: Dict[str, Any]) -> None:
         st.info("No recommendations returned.")
 
 
-def display_analysis_tabs(result: Dict[str, Any]) -> None:
+def display_analysis_tabs(result: dict[str, Any]) -> None:
     display_summary_block(result)
     tabs = st.tabs(
         [
