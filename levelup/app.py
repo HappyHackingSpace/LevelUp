@@ -56,7 +56,7 @@ def analyzecv_pdf_withllm(text: str, report_language: str) -> dict[str, Any] | N
 
         if not isinstance(data := json.loads(json_str), dict):
             st.error("Invalid JSON object.")
-            return
+            return None
 
         return cast(dict[str, Any], data)
     except Exception as e:
