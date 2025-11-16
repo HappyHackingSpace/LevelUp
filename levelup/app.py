@@ -1,11 +1,10 @@
-import io
 import json
 import re
 from typing import Any, cast
 
 import google.generativeai as genai
 import pandas as pd  # type: ignore[import-untyped]
-import pypdf
+import pdfplumber
 import streamlit as st
 
 from levelup import config
@@ -23,11 +22,10 @@ Model = genai.GenerativeModel("gemini-2.0-flash-lite")
 
 def extract_text_from_pdf(uploaded_file: Any) -> str | None:
     try:
-        pdf_reader = pypdf.PdfReader(io.BytesIO(uploaded_file.read()))
-        parts: list[str] = []
-        for page in pdf_reader.pages:
-            parts.append(page.extract_text() or "")
-        return "\n".join(parts).strip()
+        with pdfplumber.open(uploaded_file) as pdf:
+            parts = [page.extract_text() or "" for page in pdf.pages]
+        text = "\n".join(parts).strip()
+        return text
     except Exception as e:
         st.error(f"PDF reading error: {e}")
         return None
