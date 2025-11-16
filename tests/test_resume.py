@@ -1,6 +1,6 @@
-import io
 import os
 import sys
+from io import BytesIO
 from unittest.mock import MagicMock
 
 from pytest_mock import MockerFixture
@@ -22,15 +22,22 @@ from levelup.app import (
 
 
 def test_extract_text_from_pdf(mocker: MockerFixture) -> None:
-    """Test extract_text_from_pdf function."""
-    mock_reader = MagicMock()
     mock_page = MagicMock()
     mock_page.extract_text.return_value = "test"
-    mock_reader.pages = [mock_page]
 
-    mocker.patch("levelup.app.pypdf.PdfReader", return_value=mock_reader)
+    mock_pdf = MagicMock()
+    mock_pdf.pages = [mock_page]
 
-    assert extract_text_from_pdf(io.BytesIO(b"test")) == "test"
+    mock_open = mocker.patch("levelup.app.pdfplumber.open")
+    mock_open.return_value.__enter__.return_value = mock_pdf
+    mock_open.return_value.__exit__.return_value = False
+
+    fake_file = BytesIO(b"%PDF-1.4 fake content")
+
+    text = extract_text_from_pdf(fake_file)
+
+    assert text == "test"
+    mock_open.assert_called_once_with(fake_file)
 
 
 def test_analyzecv_pdf_withllm_success(mocker: MockerFixture) -> None:
