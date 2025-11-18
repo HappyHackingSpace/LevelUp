@@ -302,7 +302,7 @@ def display_analysis_tabs(result: dict[str, Any]) -> None:
         display_recommendations_tab(result)
 
 
-st.title("Advanced Resume Analysis Application")
+st.title("LevelUp")
 
 uploaded_file = st.file_uploader("Upload your Resume (PDF)", type="pdf")
 if uploaded_file:
