@@ -310,16 +310,28 @@ if uploaded_file:
     if text:
         st.subheader("Select report language")
         language_options = [
+            "Czech",
+            "Danish",
+            "Dutch",
             "English",
-            "German",
+            "Finnish",
             "French",
+            "German",
+            "Greek",
             "Italian",
+            "Kurdish (Kurmanji)",
+            "Polish",
+            "Portuguese",
             "Russian",
-            "Turkish",
             "Spanish",
+            "Swedish",
+            "Turkish",
+            "Ukrainian",
         ]
         selected_language = st.selectbox(
-            "Choose a language for the report", language_options
+            "Choose a language for the report",
+            language_options,
+            index=language_options.index("English"),
         )
 
         if st.button("Analyze Resume"):
