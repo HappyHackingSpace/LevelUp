@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Any, cast
+from typing import Any, Optional, cast
 
 import google.generativeai as genai
 import pandas as pd  # type: ignore[import-untyped]
@@ -41,8 +41,10 @@ def _extract_json_block(raw_text: str) -> str | None:
     return None
 
 
-def analyzecv_pdf_withllm(text: str, report_language: str) -> dict[str, Any] | None:
-    prompt = get_resume_analysis_prompt(text, report_language)
+def analyzecv_pdf_withllm(
+    text: str, report_language: str, target_role: Optional[str] = None
+) -> dict[str, Any] | None:
+    prompt = get_resume_analysis_prompt(text, report_language, target_role)
     try:
         response = Model.generate_content(prompt)
         raw_text = (response.text or "").strip()
@@ -334,8 +336,62 @@ if uploaded_file:
             index=language_options.index("English"),
         )
 
+        role_options = [
+            "No specific target role",
+            "Data Scientist",
+            "Data Analyst",
+            "Data Engineer",
+            "Machine Learning Engineer",
+            "AI Engineer",
+            "MLOps Engineer",
+            "Deep Learning Engineer",
+            "Business Intelligence Analyst",
+            "Data Architect",
+            "AI Product Manager",
+            "Software Engineer",
+            "Backend Engineer",
+            "Frontend Engineer",
+            "Full Stack Engineer",
+            "Mobile Developer",
+            "DevOps Engineer",
+            "Cloud Engineer",
+            "Solution Architect",
+            "Application Developer",
+            "QA Engineer",
+            "Test Automation Engineer",
+            "Manual Tester",
+            "Cybersecurity Analyst",
+            "Security Engineer",
+            "Security Architect",
+            "SOC Analyst",
+            "Penetration Tester",
+            "Product Manager",
+            "Product Owner",
+            "Scrum Master",
+            "Project Manager",
+            "System Administrator",
+            "Network Engineer",
+            "IT Support Specialist",
+            "Platform Engineer",
+            "UX Designer",
+            "UI Designer",
+            "Product Designer",
+        ]
+
+        selected_role_label = st.selectbox(
+            "Choose a target role for the report",
+            role_options,
+            index=0,
+        )
+
+        selected_role: Optional[str]
+        if selected_role_label == "No specific target role":
+            selected_role = None
+        else:
+            selected_role = selected_role_label
+
         if st.button("Analyze Resume"):
             with st.spinner("Analyzing Resume..."):
-                result = analyzecv_pdf_withllm(text, selected_language)
+                result = analyzecv_pdf_withllm(text, selected_language, selected_role)
                 if result:
                     display_analysis_tabs(result)
