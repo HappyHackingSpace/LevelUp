@@ -39,6 +39,7 @@ dev = [
     "mkdocs>=1.6.1",
     "mkdocs-git-revision-date-localized-plugin>=1.5.0",
     "mkdocs-material[pymdown]>=9.6.22",
+    "pygments>=2.18.0,<2.20.0",
     # security
     "bandit>=1.8.6",
     "safety>=3.6.2",
