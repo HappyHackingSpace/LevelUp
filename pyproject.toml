@@ -16,6 +16,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "alembic>=1.17.1",
+    "typer>=0.12.0",
     "celery>=5.5.3",
     "dotenv>=0.9.9",
     "fastapi>=0.120.4",
@@ -32,6 +33,9 @@ dependencies = [
     "pytest-mock==3.15.1",
     "pdfplumber==0.11.8"
 ]
+
+[project.scripts]
+levelup = "levelup.cli:main"
 
 [dependency-groups]
 dev = [
