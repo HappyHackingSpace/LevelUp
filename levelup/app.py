@@ -376,6 +376,7 @@ if uploaded_file:
             "UX Designer",
             "UI Designer",
             "Product Designer",
+            "Other (specify)",
         ]
 
         selected_role_label = st.selectbox(
@@ -387,6 +388,9 @@ if uploaded_file:
         selected_role: Optional[str]
         if selected_role_label == "No specific target role":
             selected_role = None
+        elif selected_role_label == "Other (specify)":
+            custom_role = st.text_input("Enter your target role")
+            selected_role = custom_role.strip() if custom_role.strip() else None
         else:
             selected_role = selected_role_label
 
