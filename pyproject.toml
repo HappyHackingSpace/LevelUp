@@ -30,8 +30,8 @@ dependencies = [
     "sqlalchemy-utils>=0.42.0",
     "starlette>=0.49.1",
     "streamlit>=1.51.0",
-    "pytest-mock==3.15.1",
-    "pdfplumber==0.11.8"
+    "pytest-mock==3.16.0",
+    "pdfplumber==0.11.10"
 ]
 
 [project.scripts]
@@ -43,7 +43,7 @@ dev = [
     "mkdocs>=1.6.1",
     "mkdocs-git-revision-date-localized-plugin>=1.5.0",
     "mkdocs-material[pymdown]>=9.6.22",
-    "pygments>=2.18.0,<2.20.0",
+    "pygments>=2.18.0,<2.22.0",
     # security
     "bandit>=1.8.6",
     "safety>=3.6.2",
