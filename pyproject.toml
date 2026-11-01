@@ -11,6 +11,7 @@ packages = ["levelup"]
 [project]
 name = "LevelUP"
 version = "0.1.0"
+license = { text = "MIT" }
 description = "LevelUP is an advanced AI-powered CV analysis application"
 readme = "README.md"
 requires-python = ">=3.13"
