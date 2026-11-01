@@ -1,6 +1,7 @@
 import json
 import re
 from typing import Any, Optional, cast
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import google.generativeai as genai
 import pandas as pd  # type: ignore[import-untyped]
@@ -9,6 +10,7 @@ import streamlit as st
 
 from levelup import config
 from levelup.prompts import get_resume_analysis_prompt
+from levelup.share import load_shared_analysis, save_shared_analysis
 
 GEMINI_API_KEY = config.GEMINI_API_KEY
 if not GEMINI_API_KEY:
@@ -281,6 +283,54 @@ def display_recommendations_tab(result: dict[str, Any]) -> None:
         st.info("No recommendations returned.")
 
 
+def build_share_url(share_id: str) -> str:
+    """Builds an absolute share URL for the given share id when possible."""
+    try:
+        base_url = str(st.context.url or "")
+    except Exception:
+        base_url = ""
+    if not base_url:
+        return f"?share_id={share_id}"
+    parsed = urlsplit(base_url)
+    query = dict(parse_qsl(parsed.query))
+    query["share_id"] = share_id
+    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urlencode(query), ""))
+
+
+def display_share_section(
+    result: dict[str, Any], report_language: str, target_role: Optional[str]
+) -> None:
+    """Lets the user generate and copy a shareable link for the results."""
+    st.divider()
+    st.subheader("Share these results")
+    if st.button("Generate shareable link"):
+        try:
+            share_id = save_shared_analysis(result, report_language, target_role)
+            st.session_state["share_id"] = share_id
+        except OSError as e:
+            st.error(f"Could not create a shareable link: {e}")
+    stored_share_id = st.session_state.get("share_id")
+    if stored_share_id:
+        st.code(build_share_url(stored_share_id), language=None)
+        st.caption(
+            "Anyone with this link can view this analysis report. "
+            "The uploaded CV file is not shared."
+        )
+
+
+def render_shared_analysis(share_id: str) -> None:
+    """Renders a read-only view of a previously shared analysis."""
+    payload = load_shared_analysis(share_id)
+    if not payload:
+        st.error("This share link is invalid or no longer available.")
+        return
+    st.caption("Shared analysis report (read-only).")
+    target_role = payload.get("target_role")
+    if target_role:
+        st.markdown(f"**Target Role:** {target_role}")
+    display_analysis_tabs(payload["result"])
+
+
 def display_analysis_tabs(result: dict[str, Any]) -> None:
     display_summary_block(result)
     tabs = st.tabs(
@@ -305,6 +355,11 @@ def display_analysis_tabs(result: dict[str, Any]) -> None:
 
 
 st.title("LevelUp")
+
+shared_id = st.query_params.get("share_id")
+if shared_id:
+    render_shared_analysis(shared_id)
+    st.stop()
 
 uploaded_file = st.file_uploader("Upload your Resume (PDF)", type="pdf")
 if uploaded_file:
@@ -398,4 +453,16 @@ if uploaded_file:
             with st.spinner("Analyzing Resume..."):
                 result = analyzecv_pdf_withllm(text, selected_language, selected_role)
                 if result:
-                    display_analysis_tabs(result)
+                    st.session_state["analysis_result"] = result
+                    st.session_state["analysis_language"] = selected_language
+                    st.session_state["analysis_role"] = selected_role
+                    st.session_state.pop("share_id", None)
+
+        analysis_result = st.session_state.get("analysis_result")
+        if analysis_result:
+            display_analysis_tabs(analysis_result)
+            display_share_section(
+                analysis_result,
+                st.session_state.get("analysis_language", selected_language),
+                st.session_state.get("analysis_role"),
+            )
