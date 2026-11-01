@@ -86,3 +86,7 @@ pytest -q
 ## Contribution
 
 Your contributions will help us make this project better. Please use GitHub issues for bug reports or feature requests.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=HappyHackingSpace/LevelUp&type=Date)](https://star-history.com/#HappyHackingSpace/LevelUp&Date)
