@@ -8,6 +8,7 @@ import pdfplumber
 import streamlit as st
 
 from levelup import config
+from levelup.charts import competency_scores_chart, domain_scores_chart
 from levelup.prompts import get_resume_analysis_prompt
 
 GEMINI_API_KEY = config.GEMINI_API_KEY
@@ -219,6 +220,9 @@ def display_competencies_tab(result: dict[str, Any]) -> None:
                 return 0.0
 
         comps_sorted = sorted(comps, key=_score, reverse=True)
+        chart = competency_scores_chart(comps)
+        if chart is not None:
+            st.altair_chart(chart)
         df = pd.DataFrame(
             [
                 {
@@ -245,6 +249,9 @@ def display_domains_tab(result: dict[str, Any]) -> None:
             )
         except Exception:
             domains_sorted = domains
+        chart = domain_scores_chart(domains)
+        if chart is not None:
+            st.altair_chart(chart)
         df = pd.DataFrame(
             [
                 {
