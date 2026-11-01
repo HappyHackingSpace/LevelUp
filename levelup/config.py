@@ -103,3 +103,6 @@ ALEMBIC_INI_PATH = config(
 )
 
 GEMINI_API_KEY = config("GEMINI_API_KEY", default="", cast=str)
+
+# Directory where shareable analysis results are stored.
+SHARED_RESULTS_DIR = config("SHARED_RESULTS_DIR", default="shared_results", cast=str)
